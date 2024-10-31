@@ -178,9 +178,3 @@ Eagerness = 48, middle_id 24
 
 
 
-Each table will have:
-# foreign key
-# relationships
-# serialize rules
-# validations
-WORK TO-DO: evaluate their relationship, write CRUD routes
