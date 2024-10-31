@@ -60,7 +60,7 @@ Drugs = 3
 Sleep = 4
 Exercise = 5
 
-INTERNAL BIOLOGY
+BIOLOGY
 id = db.Column(db.Integer, primary_key=True)
 Heart Rate Changes = 1
 Blood Pressure Fluctuations = 2
@@ -73,7 +73,7 @@ Skin Reactions = 8
 Changes in Body Temperature = 9
 Chest Tightness or Pressure = 10
 
-EXTERNAL BIOLOGY
+PHYSIOLOGY
 id = db.Column(db.Integer, primary_key=True)
 Facial Expressions = 1
 Posture = 2

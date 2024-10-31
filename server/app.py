@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import os
 
-from models import db  # Make sure models.py defines db as SQLAlchemy instance
+from models import db, User, Diary, Vulnerability, Biology, Physiology, Core, Middle, Outer # Make sure models.py defines db as SQLAlchemy instance
 
 # Create a Flask application object
 app = Flask(__name__)
