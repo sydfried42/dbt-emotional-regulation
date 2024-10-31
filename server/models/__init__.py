@@ -21,3 +21,13 @@ convention = {
 }
 
 db = SQLAlchemy(metadata=MetaData(naming_convention=convention))
+
+# Import models
+from .user import User
+from .diary import Diary
+from .vulnerability import Vulnerability
+from .biology import Biology
+from .physiology import Physiology
+from .core import Core
+from .middle import Middle
+from .outer import Outer
