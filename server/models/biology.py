@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from . import db
 
 class Biology(db.Model, SerializerMixin):
-    __tablename__ = 'biology'
+    __tablename__ = 'biologies'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)

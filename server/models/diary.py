@@ -14,16 +14,16 @@ class Diary(db.Model, SerializerMixin):
     # foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     vulnerability_id = db.Column(db.Integer, db.ForeignKey('vulnerabilities.id'))
-    biology_id = db.Column(db.Integer, db.ForeignKey('biology.id'))
-    physiology_id = db.Column(db.Integer, db.ForeignKey('physiology.id'))
+    biology_id = db.Column(db.Integer, db.ForeignKey('biologies.id'))
+    physiology_id = db.Column(db.Integer, db.ForeignKey('physiologies.id'))
     primary_emotion_id = db.Column(db.Integer, db.ForeignKey('outers.id'))
     secondary_emotion_id = db.Column(db.Integer, db.ForeignKey('outers.id'), nullable=True)
 
     # relationships
     user = db.relationship('User', back_populates='diaries')
-    vulnerability = db.relationship('Vulnerability')
-    biology = db.relationship('Biology')
-    physiology = db.relationship('Physiology')
+    vulnerability = db.relationship('Vulnerability', back_populates='diaries')
+    biology = db.relationship('Biology', back_populates='diaries')
+    physiology = db.relationship('Physiology', back_populates='diaries')
     primary_emotion = db.relationship('Outer', foreign_keys=[primary_emotion_id])
     secondary_emotion = db.relationship('Outer', foreign_keys=[secondary_emotion_id])
 

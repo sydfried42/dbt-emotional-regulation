@@ -7,7 +7,7 @@ class Outer(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    middle_id = db.Column(db.Integer, db.ForeignKey('middles.id'))
+    middle_id = db.Column(db.Integer, db.ForeignKey('middles.id'), nullable=False)
     core_id = db.Column(db.Integer, db.ForeignKey('cores.id'))
 
     # relationships
