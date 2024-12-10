@@ -52,8 +52,22 @@ def create_app():
 
    
    # CORE
-        # 'GET' all
-        # 'GET' by id
+    # 'GET' all
+    @app.route('/cores', methods=['GET'])
+    def all_cores():
+        try:
+            cores = Core.query.all()
+            return jsonify([core.to_dict() for core in cores]), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
+
+    # 'GET' by id
+    @app.route('/cores/<int:id>', methods=['GET'])
+    def core_by_id(id):
+        core = Core.query.filter_by(id=id).first()
+        if not core:
+            return jsonify({'error': 'Core emotion not found'}), 404
+        return jsonify(core.to_dict()), 200
 
     # DIARY
         # 'GET' and 'POST' all
