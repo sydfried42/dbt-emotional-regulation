@@ -75,11 +75,41 @@ def create_app():
 
     # MIDDLE
         # 'GET' all
-        # 'GET' by id
+    @app.route('/middles', methods=['GET'])
+    def all_middles():
+        try:
+            middles = Middle.query.all()
+            return jsonify([middle.to_dict() for middle in middles]), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
+
+    # 'GET' by id
+    @app.route('/middles/<int:id>', methods=['GET'])
+    def middle_by_id(id):
+        middle = Middle.query.filter_by(id=id).first()
+        if not middle:
+            return jsonify({'error': 'Middle emotion not found'}), 404
+        return jsonify(core.to_dict()), 200
 
     # OUTER
         # 'GET' all
+    @app.route('/outers', methods=['GET'])
+    def all_outers():
+        try:
+            outers = Outer.query.all()
+            return jsonify([outer.to_dict() for outer in outers]), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
         # 'GET' by id
+    @app.route('/outers/<int:id>', methods=['GET'])
+    def outer_by_id(id):
+        try:
+            outer = Outer.query.get(id)
+            if not outer:
+                return jsonify({'error': 'Outer emotion not found'}), 404
+            return jsonify(outer.to_dict()), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
 
     # PHYSIOLOGY
         # 'GET' all
