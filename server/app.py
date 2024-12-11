@@ -50,8 +50,8 @@ def create_app():
             return jsonify({'error': 'Biology not found'}), 404
         return jsonify(biology.to_dict()), 200
 
-   
-   # CORE
+
+    # CORE
     # 'GET' all
     @app.route('/cores', methods=['GET'])
     def all_cores():
@@ -69,12 +69,14 @@ def create_app():
             return jsonify({'error': 'Core emotion not found'}), 404
         return jsonify(core.to_dict()), 200
 
+
     # DIARY
         # 'GET' and 'POST' all
         # 'GET' by id
 
+
     # MIDDLE
-        # 'GET' all
+    # 'GET' all
     @app.route('/middles', methods=['GET'])
     def all_middles():
         try:
@@ -91,8 +93,9 @@ def create_app():
             return jsonify({'error': 'Middle emotion not found'}), 404
         return jsonify(core.to_dict()), 200
 
+
     # OUTER
-        # 'GET' all
+    # 'GET' all
     @app.route('/outers', methods=['GET'])
     def all_outers():
         try:
@@ -100,7 +103,7 @@ def create_app():
             return jsonify([outer.to_dict() for outer in outers]), 200
         except Exception as e:
             return jsonify({'errors': [str(e)]}), 500
-        # 'GET' by id
+    # 'GET' by id
     @app.route('/outers/<int:id>', methods=['GET'])
     def outer_by_id(id):
         try:
@@ -112,8 +115,24 @@ def create_app():
             return jsonify({'errors': [str(e)]}), 500
 
     # PHYSIOLOGY
-        # 'GET' all
-        # 'GET' by id
+    # 'GET' all
+    @app.route('/physiologies', methods=['GET'])
+    def all_physiologies():
+        try:
+            physiologies = Physiology.query.all()
+            return jsonify([physiology.to_dict() for physiology in physiologies]), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
+    # 'GET' by id
+    @app.route('/physiologies/<int:id>', methods=['GET'])
+    def physiology_by_id(id):
+        try:
+            physiology = Physiology.query.get(id)
+            if not physiology:
+                return jsonify({'error': 'Physiology not found'}), 404
+            return jsonify(physiology.to_dict()), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
 
     # USER
         # 'GET' and 'POST' all
