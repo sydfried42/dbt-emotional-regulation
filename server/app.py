@@ -114,6 +114,7 @@ def create_app():
         except Exception as e:
             return jsonify({'errors': [str(e)]}), 500
 
+
     # PHYSIOLOGY
     # 'GET' all
     @app.route('/physiologies', methods=['GET'])
@@ -134,13 +135,30 @@ def create_app():
         except Exception as e:
             return jsonify({'errors': [str(e)]}), 500
 
+
     # USER
         # 'GET' and 'POST' all
         # 'GET' and 'DELETE' by id
 
     # VULNERABILITY
-        # 'GET' all
-        # 'GET' by id
+    # 'GET' all
+    @app.route('/vulnerabilities', methods=['GET'])
+    def all_vulnerabilities():
+        try:
+            vulnerabilities = Vulnerability.query.all()
+            return jsonify([vulnerability.to_dict() for vulnerability in vulnerabilities]), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
+    # 'GET' by id
+    @app.route('/vulnerabilities/<int:id>', methods=['GET'])
+    def vulnerability_by_id(id):
+        try:
+            vulnerability = Vulnerability.query.get(id)
+            if not vulnerability:
+                return jsonify({'error': 'Vulnerability not found'}), 404
+            return jsonify(vulnerability.to_dict()), 200
+        except Exception as e:
+            return jsonify({'errors': [str(e)]}), 500
 
     return app
 
