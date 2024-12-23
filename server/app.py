@@ -71,8 +71,41 @@ def create_app():
 
 
     # DIARY
-        # 'GET' and 'POST' all
-        # 'GET' by id
+    # 'GET' all
+    @app.route('/diaries', methods=['GET'])
+    def all_diaries():
+        diaries = Diary.query.all()
+        return [diary.to_dict() for diary in diaries], 200
+
+
+    # 'GET' by id
+    @app.route('/diaries/<int:id>', methods=['GET'])
+    def diary_by_id(id):
+        diary = Diary.query.filter(Diary.id == id).first()
+        if not diary:
+            return {'error': 'diary entry not found'}, 404
+        return diary.to_dict(), 200
+
+
+    # 'POST'
+    @app.route('/diaries', methods=['POST'])
+    def create_diary():
+        json_data = request.get_json()
+
+        try:
+            new_diary = Diary(
+                title=json_data.get('title'),
+                content=json_data.get('content'),
+                user_id=json_data.get('user_id'),
+                date=json_data.get('date')
+            )
+        except ValueError as e:
+            return {'errors': [str(e)]}, 400
+
+        db.session.add(new_diary)
+        db.session.commit()
+        return new_diary.to_dict(), 201
+
 
 
     # MIDDLE
@@ -137,8 +170,55 @@ def create_app():
 
 
     # USER
-        # 'GET' and 'POST' all
-        # 'GET' and 'DELETE' by id
+    # 'GET' all
+    @app.route('/users', methods=['GET'])
+    def all_users():
+        users = User.query.all()
+        return [user.to_dict() for user in users], 200
+
+
+    # 'POST'
+    @app.route('/users', methods=['POST'])
+    def create_user():
+        json_data = request.get_json()
+
+        try:
+            new_user = User(
+                username=json_data.get('username'),
+                email=json_data.get('email'),
+                password=json_data.get('password'),  # Assumed you handle password securely elsewhere
+                first_name=json_data.get('first_name'),
+                last_name=json_data.get('last_name')
+            )
+        except ValueError as e:
+            return {'errors': [str(e)]}, 400
+
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user.to_dict(), 201
+
+
+    # 'GET' by id
+    @app.route('/users/<int:id>', methods=['GET'])
+    def user_by_id(id):
+        user = User.query.filter(User.id == id).first()
+        if not user:
+            return {'error': 'user not found'}, 404
+        return user.to_dict(), 200
+
+
+    # 'DELETE' by id
+    @app.route('/users/<int:id>', methods=['DELETE'])
+    def delete_user(id):
+        user = User.query.filter(User.id == id).first()
+        if not user:
+            return {'error': 'user not found'}, 404
+
+        db.session.delete(user)
+        db.session.commit()
+        return {}, 204
+
+
 
     # VULNERABILITY
     # 'GET' all
